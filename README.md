@@ -429,5 +429,5 @@ Plug into section 2:
 
 - The ARMA(1,1) mapping of `eps^2` for GARCH(1,1) is standard.
 - The EGARCH moment / ACF formulas implemented here follow the "moments of ARMA-EGARCH" approach:
-  - Karanasos & Kim, *Moments of the ARMA-EGARCH Model* (see the included PDF).
+  - Karanasos & Kim, [Moments of the ARMA-EGARCH Model](papers/moments_of_the_arma_egarch_model.pdf).
 - The FIGARCH ARFIMA representation and fractional-difference coefficients are standard in the FIGARCH literature.
