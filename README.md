@@ -1,4 +1,4 @@
-# Analytic formulas (kurtosis + dependence of squared/absolute returns)
+### Analytic formulas (kurtosis + dependence of squared/absolute returns) for GARCH and SV processes
 
 This repository contains code that compares Monte Carlo estimates to *analytic*
 (or analytic + controlled approximation) formulas for:
@@ -7,7 +7,7 @@ This repository contains code that compares Monte Carlo estimates to *analytic*
 - **ACF / autocovariances** of **squared returns** `eps_t^2`
 - **ACF / autocovariances** of **absolute returns** `|eps_t|`
 
-The formulas below match what is implemented in `garch_acf.py` / `xgarch_acf.py`.
+for various GARCH models and the log autoregressive stochastic volatility (ARSV) model. The formulas below match what is implemented in `garch_acf.py` / `xgarch_acf.py`.
 
 ---
 
