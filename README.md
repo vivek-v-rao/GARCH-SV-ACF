@@ -7,7 +7,7 @@ This repository contains code that compares Monte Carlo estimates to *analytic*
 - **ACF / autocovariances** of **squared returns** `eps_t^2`
 - **ACF / autocovariances** of **absolute returns** `|eps_t|`
 
-for various GARCH models and the log autoregressive stochastic volatility (ARSV) model. The formulas below match what is implemented in `garch_acf.py` / `xgarch_acf.py`.
+for various GARCH models and the log autoregressive stochastic volatility (ARSV) model. The formulas below match what is implemented in `garch_acf.py` / `xgarch_acf.py`. Results of a program that simulates from volatility processes and compares the empirical and theoretical variance, kurtosis, and autocorrelations of squared and absolute returns are [here](results.md). One reason to find expressions for time series properties in terms of GARCH parameters is to get an initial guess for the parameters used by an optimizer to maximum the log liklihood. Another reason is to compare the statistics implied by a volatility model fit to returns to the empirical statistics.
 
 ---
 
