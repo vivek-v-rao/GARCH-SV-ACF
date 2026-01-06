@@ -1,20 +1,5 @@
 # Univariate volatility processes in `arch` (Python)
 
-GitHub will only render the Greek letters if the math is written using **GitHub's supported math delimiters**:
-
-- **Inline math:** `$ ... $` (or the safer form: ``$` ... `$``)
-- **Display math:** `$$ ... $$` or a fenced block:
-  ````
-  ```math
-  ...
-  ```
-  ````
-
-GitHub does **not** reliably render LaTeX written as `\(...\)` / `\[...\]` in Markdown files, and `\(` is often treated as an escape sequence in Markdown.
-
-Source: GitHub Docs, *Writing mathematical expressions*:
-https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions
-
 ## Notation
 
 - Observed series: $y_t$
