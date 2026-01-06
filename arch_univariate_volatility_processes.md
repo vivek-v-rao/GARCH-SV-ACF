@@ -47,13 +47,12 @@ $$
 
 `arch` uses a **power variance** specification that nests many common models:
 
-$$
-\sigma_{t}^{\lambda}=\omega
-+ \sum_{i=1}^{p}\alpha_{i}\left|\epsilon_{t-i}\right|^{\lambda}
-+\sum_{j=1}^{o}\gamma_{j}\left|\epsilon_{t-j}\right|^{\lambda}
-I\left[\epsilon_{t-j}<0\right]
-+\sum_{k=1}^{q}\beta_{k}\sigma_{t-k}^{\lambda}
-$$
+```math
+\sigma_t^{\lambda} = \omega
++ \sum_{i=1}^{p} \alpha_i \left|\epsilon_{t-i}\right|^{\lambda}
++ \sum_{j=1}^{o} \gamma_j \left|\epsilon_{t-j}\right|^{\lambda} I\left[\epsilon_{t-j}<0\right]
++ \sum_{k=1}^{q} \beta_k \sigma_{t-k}^{\lambda}
+```
 
 where $\lambda$ is the `power` argument.
 
