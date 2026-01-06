@@ -10,7 +10,7 @@ for various GARCH models and the log autoregressive stochastic volatility (ARSV)
 
 ---
 
-## 1) Notation
+#### 1) Notation
 
 Return process:
 - `eps_t = sqrt(h_t) * z_t`
@@ -30,7 +30,7 @@ All ACFs are for **mean-corrected** series (i.e., based on covariances).
 
 ---
 
-## 2) Generic identities for squared returns
+#### 2) Generic identities for squared returns
 
 Because `z_t` is independent of `h_t` and independent over time:
 
@@ -56,7 +56,7 @@ So the problem reduces to getting `mu_h`, `m2_h`, and `E[h_t h_{t+k}]`.
 
 ---
 
-## 3) Random-coefficient AR(1) form for h_t (Tier-A for squared returns)
+#### 3) Random-coefficient AR(1) form for h_t (Tier-A for squared returns)
 
 Several models in the code can be written as:
 
@@ -71,14 +71,14 @@ Define the key expectations:
 
 (Here `z` is a generic copy of `z_t`.)
 
-### 3.1 Unconditional moments of h_t
+#### 3.1 Unconditional moments of h_t
 
 Under `p1 < 1` and `p2 < 1`:
 
 - `mu_h = E[h] = omega / (1 - p1)`
 - `m2_h = E[h^2] = omega^2 * (1 + p1) / ((1 - p1) * (1 - p2))`
 
-### 3.2 Autocovariances of squared returns eps^2
+#### 3.2 Autocovariances of squared returns eps^2
 
 Define the lag-1 covariance of squared returns:
 
@@ -98,9 +98,9 @@ This is exactly what the generic `autocov_sq_from_pq(...)` path implements.
 
 ---
 
-## 4) Model-specific p1, p2, q1 for the random-coefficient class
+#### 4) Model-specific p1, p2, q1 for the random-coefficient class
 
-### 4.1 Symmetric GARCH(1,1)
+#### 4.1 Symmetric GARCH(1,1)
 
 Model:
 - `h_t = omega + alpha * eps_{t-1}^2 + beta * h_{t-1}`
@@ -112,7 +112,7 @@ Thus:
 - `p2 = beta^2 + 2*alpha*beta + alpha^2 * kappa`
 - `q1 = beta + alpha * kappa`
 
-### 4.2 NAGARCH(1,1) (a.k.a. NGARCH, "2b" form in the code)
+#### 4.2 NAGARCH(1,1) (a.k.a. NGARCH, "2b" form in the code)
 
 Model in random-coefficient form:
 - `h_t = omega + [ beta + alpha*(z_{t-1} - theta)^2 ] * h_{t-1}`
@@ -124,7 +124,7 @@ Thus with general `kappa = E[z^4]`:
 
 (For normal `z`, `kappa = 3`.)
 
-### 4.3 GJR-GARCH(1,1)
+#### 4.3 GJR-GARCH(1,1)
 
 Model:
 - `h_t = omega + (alpha + gamma*I(z_{t-1}<0)) * eps_{t-1}^2 + beta*h_{t-1}`
@@ -139,7 +139,7 @@ Assuming symmetric `z` so `P(z<0)=1/2` and `E[z^m I(z<0)] = 0.5*E[z^m]` for even
 
 ---
 
-## 5) Closed-form ACF of squared returns for GARCH(1,1) via ARMA(1,1)
+#### 5) Closed-form ACF of squared returns for GARCH(1,1) via ARMA(1,1)
 
 The code also uses the classic ARMA(1,1) representation for `eps_t^2`:
 
@@ -161,7 +161,7 @@ This is exactly the formula implemented by `theoretical_acf_sq_garch_1_1(...)`.
 
 ---
 
-## 6) ACF of squared returns for NAGARCH and GJR-GARCH (normal z)
+#### 6) ACF of squared returns for NAGARCH and GJR-GARCH (normal z)
 
 For NAGARCH(1,1) and GJR-GARCH(1,1), the code uses:
 
@@ -175,7 +175,7 @@ with:
 
 ---
 
-## 7) Absolute returns |eps_t| : Tier-A lognormal approximation (GARCH / NAGARCH / GJR / FIGARCH)
+#### 7) Absolute returns |eps_t| : Tier-A lognormal approximation (GARCH / NAGARCH / GJR / FIGARCH)
 
 The code's "Tier-A" approximation treats `h_t` as **lognormal** by matching
 its mean and variance:
@@ -189,7 +189,7 @@ Match the first two moments:
 - `s2 = log( 1 + var_h / mu_h^2 )`
 - `m  = log(mu_h) - 0.5*s2`
 
-### 7.1 Converting Corr(h_t, h_{t+k}) to Corr(U_t, U_{t+k})
+#### 7.1 Converting Corr(h_t, h_{t+k}) to Corr(U_t, U_{t+k})
 
 Let:
 - `corr_h(k) = Corr(h_t, h_{t+k})`.
@@ -198,7 +198,7 @@ Then for the corresponding Gaussian correlation `rho_u(k)`:
 
 - `rho_u(k) = log( 1 + corr_h(k) * (exp(s2) - 1) ) / s2`.
 
-### 7.2 Moments needed for |eps|
+#### 7.2 Moments needed for |eps|
 
 For any `p`:
 - `E[h^p] = exp(p*m + 0.5*p^2*s2)`
@@ -212,7 +212,7 @@ Then:
 And since `|eps|^2 = eps^2` and `E[z^2]=1`:
 - `Var(|eps|) = E[eps^2] - mean_abs^2 = mu_h - mean_abs^2`
 
-### 7.3 Cross-moment and autocovariance of |eps|
+#### 7.3 Cross-moment and autocovariance of |eps|
 
 Assume `(U_t, U_{t+k})` is bivariate normal with correlation `rho_u(k)`.
 For constants `a,b`:
@@ -232,7 +232,7 @@ So:
 Finally:
 - `acf_abs(k) = Cov(|eps_t|, |eps_{t+k}|) / Var(|eps|)`.
 
-### 7.4 Corr(h_t, h_{t+k}) used in Tier-A
+#### 7.4 Corr(h_t, h_{t+k}) used in Tier-A
 
 For the random-coefficient AR(1) class (sections 3-4), the code uses:
 
@@ -244,9 +244,9 @@ For FIGARCH, `corr_h(k)` is obtained via the ARFIMA-based autocovariances
 
 ---
 
-## 8) FIGARCH(1,d,1)
+#### 8) FIGARCH(1,d,1)
 
-### 8.1 Weights lambda_j for the ARCH(infinity) representation
+#### 8.1 Weights lambda_j for the ARCH(infinity) representation
 
 The code builds the fractional-difference coefficients `pi_j` by:
 
@@ -259,7 +259,7 @@ With `phi = alpha + beta`, the ARCH(infinity) weights are:
 
 (These are computed up to a truncation level `n_terms`.)
 
-### 8.2 ACF of squared returns eps^2 via ARFIMA(1,d,1)
+#### 8.2 ACF of squared returns eps^2 via ARFIMA(1,d,1)
 
 Let:
 - `x_t = eps_t^2 - E[eps_t^2]`.
@@ -287,7 +287,7 @@ Then the autocovariance is:
 and:
 - `acf_sq(k) = gamma_x(k) / gamma_x(0)`.
 
-### 8.3 Tier-A absolute returns for FIGARCH
+#### 8.3 Tier-A absolute returns for FIGARCH
 
 The code first computes `mu_h` from the ARCH(infinity) weights:
 
@@ -315,7 +315,7 @@ From there, Tier-A proceeds as in section 7.
 
 ---
 
-## 9) EGARCH(1,1) with normal innovations (exact up to truncation)
+#### 9) EGARCH(1,1) with normal innovations (exact up to truncation)
 
 Simulation model (Nelson-style):
 - `eps_t = sqrt(h_t) z_t`, `z_t ~ N(0,1)`
@@ -337,7 +337,7 @@ Then for any scalar `s`:
 
 The code truncates the product when `|s*beta^j|` becomes small.
 
-### 9.1 Closed forms used for M_u(t), Q_u(t), A_u(t)
+#### 9.1 Closed forms used for M_u(t), Q_u(t), A_u(t)
 
 For `z ~ N(0,1)` and `ez_abs = E|z| = sqrt(2/pi)`:
 
@@ -351,7 +351,7 @@ The code also uses:
 
 via auxiliary half-line integrals (also in closed form).
 
-### 9.2 Squared returns: autocov and kurtosis
+#### 9.2 Squared returns: autocov and kurtosis
 
 The EGARCH routines compute (up to truncation):
 - `mu_h = E[h] = E[exp(x)]`
@@ -364,7 +364,7 @@ Then they plug into section 2 identities:
 - `Cov(eps_t^2, eps_{t+k}^2) = E[h_t h_{t+k}] - mu_h^2`
 - `acf_sq(k) = Cov / Var`.
 
-### 9.3 Absolute returns: exact autocov (up to truncation)
+#### 9.3 Absolute returns: exact autocov (up to truncation)
 
 The EGARCH absolute-return autocovariance uses the exact decomposition:
 
@@ -384,7 +384,7 @@ Then:
 
 ---
 
-## 10) Stochastic volatility: log-AR(1) (squared returns only in the code)
+#### 10) Stochastic volatility: log-AR(1) (squared returns only in the code)
 
 One SV form in the code is:
 
@@ -411,7 +411,7 @@ Plug into section 2:
 
 ---
 
-## 11) Stationarity / finiteness conditions used implicitly
+#### 11) Stationarity / finiteness conditions used implicitly
 
 - Random-coefficient class (GARCH/NAGARCH/GJR):
   - `p1 < 1` for finite mean
@@ -425,7 +425,7 @@ Plug into section 2:
 
 ---
 
-## 12) What to cite if you want a reference
+#### 12) What to cite if you want a reference
 
 - The ARMA(1,1) mapping of `eps^2` for GARCH(1,1) is standard.
 - The EGARCH moment / ACF formulas implemented here follow the "moments of ARMA-EGARCH" approach:
