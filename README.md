@@ -430,4 +430,4 @@ Plug into section 2:
 - GARCH moment / ACF formulas agree with He & Terasvirta, [Properties of moments of a family of GARCH processes](papers/properties_of_moments_of_a_family_of_garch_processes.pdf).
 - EGARCH moment / ACF formulas implemented here follow the "moments of ARMA-EGARCH" approach:
   - Karanasos & Kim, [Moments of the ARMA-EGARCH Model](papers/moments_of_the_arma_egarch_model.pdf).
-- FIGARCH formulas agree with On the Autocorrelation Properties of Long‐Memory GARCH Processes
+- FIGARCH formulas agree with Karanasos et al., [On the Autocorrelation Properties of Long‐Memory GARCH Processes](papers/autocorrelation_properties_of_long_memory_garch_processes.pdf).
